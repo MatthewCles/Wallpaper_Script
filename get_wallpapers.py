@@ -11,9 +11,9 @@ config_file = open('config.yml', 'r')
 config = yaml.load(config_file)
 config_file.close()
 
-currNumberOfPhotos = 0
+current_number_of_photos = 0
 
-while currNumberOfPhotos < config['min_number_of_photos']:
+while current_number_of_photos < config['min_number_of_photos']:
 
   # Chose the collection
   collection_name = random.sample(config['collections'].keys(), 1)[0]
@@ -36,7 +36,7 @@ while currNumberOfPhotos < config['min_number_of_photos']:
 
     url = 'https://source.unsplash.com/collection/' + str(collection_value) + '/' + config['resolution'] + '.jpeg'
     filename = wget.download(url, out = "./pics/pic" + str((x + 1)) + ".jpeg")
-    currNumberOfPhotos = currNumberOfPhotos + 1
+    current_number_of_photos = current_number_of_photos + 1
     # Wait 3 seconds between getting new photos to prevent downloading cashed duplicates
     time.sleep(3)
     print('')
@@ -47,5 +47,5 @@ while currNumberOfPhotos < config['min_number_of_photos']:
     size = os.path.getsize('./pics/pic' + str((x + 1)) + '.jpeg')
     if size in sizeCheckList:
       os.unlink('./pics/pic' + str((x + 1)) + '.jpeg')
-      currNumberOfPhotos = currNumberOfPhotos - 1
+      current_number_of_photos = current_number_of_photos - 1
     sizeCheckList.append(size)
