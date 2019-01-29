@@ -1,0 +1,36 @@
+# Config
+
+resolution: '1920x1080'
+max_number_of_photos: 15
+min_number_of_photos:  6
+collections: 
+  'abstract': 789734
+  'aerials': 1166960
+  'autumn': 311028
+  'beach': 329879
+  'castles': 3112387
+  'earth_from_above': 162468
+  'flood': 869015
+  'future': 1460022
+  'gradients': 540518
+  'landscape': 827743
+  'long_exposure': 162213
+  'micro_worlds': 573009
+  'milkyway': 1538150
+  'minimal_1': 325867
+  'mountians': 452289
+  'mountains_2': 2292472
+  'nature_1': 357786
+  'neon': 2411320
+  'pyro': 1254524
+  'rain': 1410320
+  'sand': 997
+  'sea_life': 1262111
+  'slice_of_sky': 2203755
+  'stars': 795671
+  'space': 1111575
+  'tropical': 173355
+  'tropical_2': 1127861
+  'waves': 794627
+  'waves_2': 3811774
+  'winter': 3178572

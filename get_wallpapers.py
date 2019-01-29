@@ -4,54 +4,20 @@ import sys
 import wget
 import datetime
 import time 
+import yaml
 
-# Config elements -> TODO: Move to/load from Config file
-collections = { 
-                'abstract': 789734,
-                'aerials': 1166960,
-                'autumn': 311028,
-                'beach': 329879,
-                'castles': 3112387,
-                'earth_from_above': 162468,
-                'gradients': 540518,
-                'landscape': 827743,
-                'long_exposure': 162213,
-                'pyro': 1254524,
-                'winter': 3178572,
-                'sea_life': 1262111,
-                'micro_worlds': 573009,
-                'minimal_1': 325867,
-                'rain': 1410320,
-                'neon': 2411320,
-                'milkyway': 1538150,
-                'slice_of_sky': 2203755,
-                'nature_1': 357786,
-                'sand': 997,
-                'flood': 869015,
-                'waves': 794627,
-                'waves_2': 3811774,
-                'tropical': 173355,
-                'tropical_2': 1127861,
-                'mountians': 452289,
-                'mountains_2': 2292472,
-                'future': 1460022,
-                'stars': 795671,
-                'space': 1111575,
-              }
-rez = '1920x1080'
+# Load config file
+config_file = open('config.yml', 'r')
+config = yaml.load(config_file)
+config_file.close()
 
-# Default values and temp variables 
-maxNumPhotos = 15
-minNumPhotos = 6
 currNumberOfPhotos = 0
 
-# Limit the number of photos to the max value
-
-while currNumberOfPhotos < minNumPhotos  and currNumberOfPhotos < maxNumPhotos:
+while currNumberOfPhotos < config['min_number_of_photos']:
 
   # Chose the collection
-  collection_name = random.sample(collections.keys(), 1)[0]
-  collection_value = collections[collection_name]
+  collection_name = random.sample(config['collections'].keys(), 1)[0]
+  collection_value = config['collections'][collection_name]
 
   # Write to log file
   now = datetime.datetime.now()
@@ -64,11 +30,11 @@ while currNumberOfPhotos < minNumPhotos  and currNumberOfPhotos < maxNumPhotos:
     os.makedirs('./pics')
 
   # Replace old photos with photos from the new collection
-  for x in range(maxNumPhotos):
+  for x in range(config['max_number_of_photos']):
     if os.path.exists('./pics/pic' + str((x + 1)) + '.jpeg'):
       os.unlink('./pics/pic' + str((x + 1)) + '.jpeg')
 
-    url = 'https://source.unsplash.com/collection/' + str(collection_value) + '/'+ rez +'.jpeg'
+    url = 'https://source.unsplash.com/collection/' + str(collection_value) + '/' + config['resolution'] + '.jpeg'
     filename = wget.download(url, out = "./pics/pic" + str((x + 1)) + ".jpeg")
     currNumberOfPhotos = currNumberOfPhotos + 1
     # Wait 3 seconds between getting new photos to prevent downloading cashed duplicates
@@ -77,7 +43,7 @@ while currNumberOfPhotos < minNumPhotos  and currNumberOfPhotos < maxNumPhotos:
   
   # Compare size of pictures to prevent duplicates. 
   sizeCheckList = []
-  for x in range(maxNumPhotos):
+  for x in range(config['max_number_of_photos']):
     size = os.path.getsize('./pics/pic' + str((x + 1)) + '.jpeg')
     if size in sizeCheckList:
       os.unlink('./pics/pic' + str((x + 1)) + '.jpeg')
