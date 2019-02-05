@@ -1,5 +1,6 @@
 # Config
 
+download_location: '/mnt/m/wallpapers'
 resolution: '1920x1080'
 max_number_of_photos: 15
 min_number_of_photos:  6
